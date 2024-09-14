@@ -149,10 +149,20 @@ public class QuickStartAppView extends LinearLayout {
         display.getSize(screenSize);
         Configuration configuration = mContext.getResources().getConfiguration();
 
+        // Determine orientation
+        boolean isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT;
+
         int centerX = screenSize.x / 2;
         int centerY = screenSize.y / 2;
-        int width = Math.min(screenSize.x, screenSize.y) * 1 / 2;
-        int height = Math.max(screenSize.x, screenSize.y) * 1 / 2;
+
+        // Adjust width and height based on orientation
+        int width = isPortrait
+            ? Math.min(screenSize.x, screenSize.y) * 3 / 4
+            : Math.min(screenSize.x, screenSize.y) * 9 / 7; // More width in landscape
+        int height = isPortrait
+            ? Math.max(screenSize.x, screenSize.y) * 1 / 2
+            : Math.max(screenSize.x, screenSize.y) * 2 / 5; // Less height in landscape
+
         Rect launchBounds = new Rect(centerX - width / 2, centerY - height / 2, centerX + width / 2, centerY + height / 2);
         
         mActivityOptions.setLaunchBounds(launchBounds);
